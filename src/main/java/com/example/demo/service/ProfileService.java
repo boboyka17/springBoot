@@ -23,7 +23,12 @@ public class ProfileService {
     private final ProfileRepository profileRepository;
     private final StorageService service;
     private  final UserRepository userRepository;
+    private  final  Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+    private Integer getUserId(){
+        User user =  (User) authentication.getPrincipal();
+        return user.getId();
+    }
     public ProfileService(AuthService authService, ProfileRepository repository, StorageService service, UserRepository userRepository) {
         this.authService = authService;
         this.profileRepository = repository;
@@ -44,7 +49,7 @@ public class ProfileService {
         return new CommonResponse("Create profile successfully");
     }
 
-    public CommonResponse updateProfile(Integer profileId,MultipartFile file, String fullname,String detail) throws IOException {
+    public Profile updateProfile(Integer profileId,MultipartFile file, String fullname,String detail) throws IOException {
         Profile profile = profileRepository.findById(profileId).orElseThrow(ProfileException::ProfileNotFound);
         profile.setFullname(fullname);
         profile.setDetail(detail);
@@ -54,7 +59,7 @@ public class ProfileService {
             profile.setImageData(imageData);
         }
         profileRepository.save(profile);
-        return new CommonResponse("Update profile success");
+        return profile;
     }
     public CommonResponse removeProfile(Integer profileId) throws BaseException {
         if(profileId == null){
@@ -71,8 +76,9 @@ public class ProfileService {
     }
 
     public List<Profile> getProfile(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        return profileRepository.findAllByUserId(user.getId());
+        return profileRepository.findAllByUserId(getUserId());
+    }
+    public Profile getProfileOne(Integer profile_id){
+        return profileRepository.findById(profile_id).orElseThrow(ProfileException::ProfileNotFound);
     }
 }
