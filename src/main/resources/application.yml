@@ -1,0 +1,44 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://idp.example.com
+          jwk-set-uri: https://idp.example.com/.well-known/jwks.json
+  mvc:
+    view:
+      prefix: "/templates/"
+      suffix: ".html"
+  datasource:
+    url: jdbc:mysql://localhost:3306/spring
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 10MB
+  mail:
+    host: smtp.gmail.com
+    username: boboyka15@gmail.com
+    password: teootoojnzyfprrh
+    port: 587
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+springdoc:
+  swagger-ui:
+    path: "/swagger-ui.html"
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
