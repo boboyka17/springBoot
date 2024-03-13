@@ -26,7 +26,7 @@ public class ProfileController {
     }
 
     @PutMapping("/update/{profile_id}")
-    public ResponseEntity<CommonResponse> updateProfile( @RequestParam(value = "file",required = false) MultipartFile file ,@RequestParam("fullname") String fullname,@RequestParam("detail") String detail,@PathVariable int profile_id) throws IOException {
+    public ResponseEntity<Profile> updateProfile( @RequestParam(value = "file",required = false) MultipartFile file ,@RequestParam("fullname") String fullname,@RequestParam("detail") String detail,@PathVariable int profile_id) throws IOException {
         return  ResponseEntity.ok(service.updateProfile(profile_id,file,fullname,detail));
     }
 
@@ -38,6 +38,11 @@ public class ProfileController {
     @GetMapping("/")
     public ResponseEntity<List<Profile>> getProfile(){
         return  ResponseEntity.ok(service.getProfile());
+    }
+
+    @GetMapping("/{profile_id}")
+    public ResponseEntity<Profile> getProfileOne(@PathVariable int profile_id){
+        return ResponseEntity.ok(service.getProfileOne(profile_id));
     }
 
 }
