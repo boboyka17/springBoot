@@ -23,6 +23,7 @@ spring:
     multipart:
       max-file-size: 2MB
       max-request-size: 10MB
+      enabled: false
   mail:
     host: smtp.gmail.com
     username: boboyka15@gmail.com

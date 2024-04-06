@@ -3,8 +3,6 @@ package com.example.demo.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Data
@@ -15,8 +13,8 @@ public class Profile {
     private String fullname;
     private String detail;
     @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
-    @JoinColumn(name = "image_data_id")
-    private ImageData imageData;
+    @JoinColumn(name = "files_id")
+    private Files files;
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
